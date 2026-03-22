@@ -1,0 +1,12 @@
+# Binary
+freelow
+
+# Per-repo session data
+.freelow/
+
+# Go build artifacts
+*.test
+*.out
+
+# macOS
+.DS_Store
