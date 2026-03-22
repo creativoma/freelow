@@ -7,7 +7,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/spf13/cobra"
 
-	"github.com/marianoalvarez/freelow/internal/timer"
+	"github.com/creativoma/freelow/internal/timer"
 )
 
 var pauseCmd = &cobra.Command{

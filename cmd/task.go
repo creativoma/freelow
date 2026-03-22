@@ -7,9 +7,9 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/spf13/cobra"
 
-	iclient "github.com/marianoalvarez/freelow/internal/client"
-	"github.com/marianoalvarez/freelow/internal/git"
-	"github.com/marianoalvarez/freelow/internal/timer"
+	iclient "github.com/creativoma/freelow/internal/client"
+	"github.com/creativoma/freelow/internal/git"
+	"github.com/creativoma/freelow/internal/timer"
 )
 
 var taskCmd = &cobra.Command{

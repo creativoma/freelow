@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/marianoalvarez/freelow/internal/timer"
+	"github.com/creativoma/freelow/internal/timer"
 )
 
 var (

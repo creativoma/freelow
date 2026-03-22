@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-03-22
+
+### Fixed
+- Module path corrected from `github.com/marianoalvarez/freelow` to `github.com/creativoma/freelow` — fixes `go install github.com/creativoma/freelow@latest`
+
 ## [0.1.0] - 2026-03-22
 
 ### Added
@@ -22,5 +27,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Auto-formatted commits: `[client] task (Xh Ymin)`
 - Terminal colors with Lipgloss
 
-[Unreleased]: https://github.com/marianoalvarez/freelow/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/marianoalvarez/freelow/releases/tag/v0.1.0
+[Unreleased]: https://github.com/creativoma/freelow/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/creativoma/freelow/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/creativoma/freelow/releases/tag/v0.1.0

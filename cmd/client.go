@@ -7,7 +7,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/spf13/cobra"
 
-	iclient "github.com/marianoalvarez/freelow/internal/client"
+	iclient "github.com/creativoma/freelow/internal/client"
 )
 
 var clientCmd = &cobra.Command{

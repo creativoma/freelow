@@ -1,4 +1,4 @@
-module github.com/marianoalvarez/freelow
+module github.com/creativoma/freelow
 
 go 1.24.1
 
