@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-03-22
+
+### Changed
+- All CLI output, error messages, flags, and command descriptions translated to English
+
 ## [0.1.1] - 2026-03-22
 
 ### Fixed
@@ -27,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Auto-formatted commits: `[client] task (Xh Ymin)`
 - Terminal colors with Lipgloss
 
-[Unreleased]: https://github.com/creativoma/freelow/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/creativoma/freelow/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/creativoma/freelow/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/creativoma/freelow/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/creativoma/freelow/releases/tag/v0.1.0

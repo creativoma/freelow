@@ -9,8 +9,8 @@ import (
 
 var rootCmd = &cobra.Command{
 	Use:   "freelow",
-	Short: "Tu copiloto freelance para git",
-	Long:  "Tracking de horas, tareas y commits por cliente. Sin apps externas.",
+	Short: "Your freelance git copilot",
+	Long:  "Track hours, tasks, and commits per client. No external apps.",
 }
 
 func Execute() {

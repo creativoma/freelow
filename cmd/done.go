@@ -13,8 +13,8 @@ import (
 )
 
 var doneCmd = &cobra.Command{
-	Use:   "done [mensaje]",
-	Short: "Para el timer, hace commit formateado y push",
+	Use:   "done [message]",
+	Short: "Stop the timer, create a formatted commit, and push",
 	Args:  cobra.MaximumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		noPush, _ := cmd.Flags().GetBool("no-push")
@@ -25,7 +25,7 @@ var doneCmd = &cobra.Command{
 		}
 		active := sessions.ActiveSession()
 		if active == nil {
-			return fmt.Errorf("no hay ninguna tarea activa")
+			return fmt.Errorf("no active task")
 		}
 
 		now := time.Now()
@@ -60,7 +60,7 @@ var doneCmd = &cobra.Command{
 				active.Commits = append(active.Commits, hash)
 				if !noPush {
 					if err := git.Push(); err != nil {
-						fmt.Printf("  aviso: push falló: %v\n", err)
+						fmt.Printf("  warning: push failed: %v\n", err)
 					}
 				}
 			}
@@ -71,8 +71,8 @@ var doneCmd = &cobra.Command{
 		}
 
 		style := lipgloss.NewStyle().Foreground(lipgloss.Color("10")).Bold(true)
-		fmt.Println(style.Render(fmt.Sprintf("✓ Tarea completada: %s", active.Task)))
-		fmt.Printf("  Tiempo: %s\n", timer.FormatDuration(active.ElapsedDuration()))
+		fmt.Println(style.Render(fmt.Sprintf("✓ Task done: %s", active.Task)))
+		fmt.Printf("  Time:   %s\n", timer.FormatDuration(active.ElapsedDuration()))
 		if hash != "" {
 			fmt.Printf("  Commit: %s — %s\n", hash, commitMsg)
 		}
@@ -81,5 +81,5 @@ var doneCmd = &cobra.Command{
 }
 
 func init() {
-	doneCmd.Flags().Bool("no-push", false, "No hacer push automático")
+	doneCmd.Flags().Bool("no-push", false, "Skip automatic push")
 }

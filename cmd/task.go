@@ -13,8 +13,8 @@ import (
 )
 
 var taskCmd = &cobra.Command{
-	Use:   "task [nombre]",
-	Short: "Crea una tarea (rama git + timer) o lista tareas",
+	Use:   "task [name]",
+	Short: "Start a task (git branch + timer) or list tasks",
 	Args:  cobra.MaximumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		listFlag, _ := cmd.Flags().GetBool("list")
@@ -32,7 +32,7 @@ func createTask(name string) error {
 	}
 	client, err := cfg.GetActive()
 	if err != nil {
-		return fmt.Errorf("no hay cliente activo. Usa: freelow client add <id>")
+		return fmt.Errorf("no active client. Run: freelow client add <id>")
 	}
 
 	sessions, err := timer.LoadSessions()
@@ -40,7 +40,7 @@ func createTask(name string) error {
 		return err
 	}
 	if active := sessions.ActiveSession(); active != nil {
-		return fmt.Errorf("ya hay una tarea activa: %s. Usa 'freelow done' o 'freelow pause'", active.Task)
+		return fmt.Errorf("task already active: %s. Run 'freelow done' or 'freelow pause'", active.Task)
 	}
 
 	slug := iclient.ToSlug(name)
@@ -48,7 +48,7 @@ func createTask(name string) error {
 
 	if git.IsRepo() {
 		if err := git.CreateBranch(branch); err != nil {
-			fmt.Printf("  (aviso: no se pudo crear rama %s: %v)\n", branch, err)
+			fmt.Printf("  (warning: could not create branch %s: %v)\n", branch, err)
 		}
 	}
 
@@ -65,7 +65,7 @@ func createTask(name string) error {
 	}
 
 	style := lipgloss.NewStyle().Foreground(lipgloss.Color("10")).Bold(true)
-	fmt.Println(style.Render(fmt.Sprintf("▶ Tarea iniciada: %s [%s]", name, client.ID)))
+	fmt.Println(style.Render(fmt.Sprintf("▶ Task started: %s [%s]", name, client.ID)))
 	fmt.Printf("  Rama:   %s\n", branch)
 	fmt.Printf("  Inicio: %s\n", now.Format("15:04:05"))
 	return nil
@@ -88,16 +88,16 @@ func listTasks() error {
 	}
 
 	if len(open) == 0 {
-		fmt.Println(dimStyle.Render("No hay tareas abiertas."))
+		fmt.Println(dimStyle.Render("No open tasks."))
 		return nil
 	}
 
-	fmt.Println("Tareas abiertas:")
+	fmt.Println("Open tasks:")
 	for _, s := range open {
 		elapsed := timer.FormatDuration(s.ElapsedDuration())
-		status := "activa"
+		status := "active"
 		if s.Paused {
-			status = "pausada"
+			status = "paused"
 		}
 		line := fmt.Sprintf("  %-30s  %s  [%s]", s.Task, elapsed, status)
 		if !s.Paused {
@@ -110,5 +110,5 @@ func listTasks() error {
 }
 
 func init() {
-	taskCmd.Flags().BoolP("list", "l", false, "Lista tareas abiertas")
+	taskCmd.Flags().BoolP("list", "l", false, "List open tasks")
 }

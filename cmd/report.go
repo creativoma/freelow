@@ -12,8 +12,8 @@ import (
 )
 
 var reportCmd = &cobra.Command{
-	Use:   "report [cliente]",
-	Short: "Genera un informe de horas y tareas",
+	Use:   "report [client]",
+	Short: "Generate a hours and tasks report",
 	Args:  cobra.MaximumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		monthFlag, _ := cmd.Flags().GetBool("month")
@@ -30,7 +30,7 @@ var reportCmd = &cobra.Command{
 		if monthFlag {
 			since = time.Date(now.Year(), now.Month(), 1, 0, 0, 0, 0, now.Location())
 			until = now
-			periodLabel = "mensual"
+			periodLabel = "monthly"
 		} else {
 			weekday := int(now.Weekday())
 			if weekday == 0 {
@@ -39,7 +39,7 @@ var reportCmd = &cobra.Command{
 			since = now.AddDate(0, 0, -(weekday - 1))
 			since = time.Date(since.Year(), since.Month(), since.Day(), 0, 0, 0, 0, since.Location())
 			until = now
-			periodLabel = "semanal"
+			periodLabel = "weekly"
 		}
 
 		var clientID string
@@ -75,7 +75,7 @@ var reportCmd = &cobra.Command{
 }
 
 func init() {
-	reportCmd.Flags().Bool("week", false, "Informe semanal (por defecto)")
-	reportCmd.Flags().Bool("month", false, "Informe mensual")
-	reportCmd.Flags().Bool("all", false, "Todos los clientes")
+	reportCmd.Flags().Bool("week", false, "Weekly report (default)")
+	reportCmd.Flags().Bool("month", false, "Monthly report")
+	reportCmd.Flags().Bool("all", false, "All clients")
 }

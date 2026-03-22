@@ -12,12 +12,12 @@ import (
 
 var clientCmd = &cobra.Command{
 	Use:   "client",
-	Short: "Gestiona clientes",
+	Short: "Manage clients",
 }
 
 var clientAddCmd = &cobra.Command{
 	Use:   "add <id>",
-	Short: "Registra un nuevo cliente",
+	Short: "Register a new client",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		id := args[0]
@@ -37,7 +37,7 @@ var clientAddCmd = &cobra.Command{
 			color = "4"
 		}
 		if !iclient.ValidColor(color) {
-			return fmt.Errorf("color inválido %q: usa un número ANSI (0-255) o hex (#RGB / #RRGGBB)", color)
+			return fmt.Errorf("invalid color %q: use an ANSI number (0-255) or hex (#RGB / #RRGGBB)", color)
 		}
 
 		cfg, err := iclient.Load()
@@ -61,28 +61,28 @@ var clientAddCmd = &cobra.Command{
 			return err
 		}
 		style := lipgloss.NewStyle().Foreground(lipgloss.Color("10")).Bold(true)
-		fmt.Println(style.Render(fmt.Sprintf("✓ Cliente %q añadido", id)))
+		fmt.Println(style.Render(fmt.Sprintf("✓ Client %q added", id)))
 		return nil
 	},
 }
 
 var clientListCmd = &cobra.Command{
 	Use:   "list",
-	Short: "Lista todos los clientes",
+	Short: "List all clients",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		cfg, err := iclient.Load()
 		if err != nil {
 			return err
 		}
 		if len(cfg.Clients) == 0 {
-			fmt.Println("No hay clientes. Usa: freelow client add <id>")
+			fmt.Println("No clients yet. Run: freelow client add <id>")
 			return nil
 		}
 		activeStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("10")).Bold(true)
 		normalStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("7"))
 		for _, c := range cfg.Clients {
 			if c.ID == cfg.Active {
-				fmt.Println(activeStyle.Render(fmt.Sprintf("▶ %s  %s  (activo)", c.ID, c.Name)))
+				fmt.Println(activeStyle.Render(fmt.Sprintf("▶ %s  %s  (active)", c.ID, c.Name)))
 			} else {
 				fmt.Println(normalStyle.Render(fmt.Sprintf("  %s  %s", c.ID, c.Name)))
 			}
@@ -93,7 +93,7 @@ var clientListCmd = &cobra.Command{
 
 var clientSwitchCmd = &cobra.Command{
 	Use:   "switch <id>",
-	Short: "Cambia el cliente activo",
+	Short: "Switch the active client",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		id := args[0]
@@ -109,7 +109,7 @@ var clientSwitchCmd = &cobra.Command{
 			return err
 		}
 		style := lipgloss.NewStyle().Foreground(lipgloss.Color("10")).Bold(true)
-		fmt.Println(style.Render(fmt.Sprintf("✓ Cliente activo: %s", id)))
+		fmt.Println(style.Render(fmt.Sprintf("✓ Active client: %s", id)))
 		return nil
 	},
 }
@@ -118,6 +118,6 @@ func init() {
 	clientCmd.AddCommand(clientAddCmd)
 	clientCmd.AddCommand(clientListCmd)
 	clientCmd.AddCommand(clientSwitchCmd)
-	clientAddCmd.Flags().StringP("name", "n", "", "Nombre del cliente")
-	clientAddCmd.Flags().StringP("color", "c", "4", "Color ANSI (0-255) o hex (#RGB / #RRGGBB)")
+	clientAddCmd.Flags().StringP("name", "n", "", "Client display name")
+	clientAddCmd.Flags().StringP("color", "c", "4", "ANSI color (0-255) or hex (#RGB / #RRGGBB)")
 }

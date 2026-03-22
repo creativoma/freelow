@@ -12,7 +12,7 @@ import (
 
 var pauseCmd = &cobra.Command{
 	Use:   "pause",
-	Short: "Pausa el timer activo",
+	Short: "Pause the active timer",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		sessions, err := timer.LoadSessions()
 		if err != nil {
@@ -20,10 +20,10 @@ var pauseCmd = &cobra.Command{
 		}
 		active := sessions.ActiveSession()
 		if active == nil {
-			return fmt.Errorf("no hay ninguna tarea activa")
+			return fmt.Errorf("no active task")
 		}
 		if active.Paused {
-			return fmt.Errorf("la tarea ya está pausada")
+			return fmt.Errorf("task is already paused")
 		}
 		now := time.Now()
 		active.Paused = true
@@ -32,15 +32,15 @@ var pauseCmd = &cobra.Command{
 			return err
 		}
 		style := lipgloss.NewStyle().Foreground(lipgloss.Color("11")).Bold(true)
-		fmt.Println(style.Render(fmt.Sprintf("⏸  Pausada: %s", active.Task)))
-		fmt.Printf("  Tiempo acumulado: %s\n", timer.FormatDuration(active.ElapsedDuration()))
+		fmt.Println(style.Render(fmt.Sprintf("⏸  Paused: %s", active.Task)))
+		fmt.Printf("  Elapsed: %s\n", timer.FormatDuration(active.ElapsedDuration()))
 		return nil
 	},
 }
 
 var resumeCmd = &cobra.Command{
 	Use:   "resume",
-	Short: "Reanuda el timer pausado",
+	Short: "Resume the paused timer",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		sessions, err := timer.LoadSessions()
 		if err != nil {
@@ -48,10 +48,10 @@ var resumeCmd = &cobra.Command{
 		}
 		active := sessions.ActiveSession()
 		if active == nil {
-			return fmt.Errorf("no hay ninguna tarea activa")
+			return fmt.Errorf("no active task")
 		}
 		if !active.Paused {
-			return fmt.Errorf("la tarea no está pausada")
+			return fmt.Errorf("task is not paused")
 		}
 		if active.PausedAt != nil {
 			active.PausedSecs += int(time.Since(*active.PausedAt).Seconds())
@@ -62,7 +62,7 @@ var resumeCmd = &cobra.Command{
 			return err
 		}
 		style := lipgloss.NewStyle().Foreground(lipgloss.Color("10")).Bold(true)
-		fmt.Println(style.Render(fmt.Sprintf("▶ Reanudada: %s", active.Task)))
+		fmt.Println(style.Render(fmt.Sprintf("▶ Resumed: %s", active.Task)))
 		return nil
 	},
 }

@@ -12,7 +12,7 @@ import (
 
 var statusCmd = &cobra.Command{
 	Use:   "status",
-	Short: "Muestra el cliente y tarea activos",
+	Short: "Show the active client and task",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		activeStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("10")).Bold(true)
 		dimStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("8"))
@@ -25,9 +25,9 @@ var statusCmd = &cobra.Command{
 
 		client, err := cfg.GetActive()
 		if err != nil {
-			fmt.Println(dimStyle.Render("Sin cliente activo. Usa: freelow client add <id>"))
+			fmt.Println(dimStyle.Render("No active client. Run: freelow client add <id>"))
 		} else {
-			fmt.Printf("%s %s\n", labelStyle.Render("Cliente:"), activeStyle.Render(client.Name))
+			fmt.Printf("%s %s\n", labelStyle.Render("Client: "), activeStyle.Render(client.Name))
 		}
 
 		sessions, err := timer.LoadSessions()
@@ -37,20 +37,20 @@ var statusCmd = &cobra.Command{
 
 		active := sessions.ActiveSession()
 		if active == nil {
-			fmt.Println(dimStyle.Render("Sin tarea activa."))
+			fmt.Println(dimStyle.Render("No active task."))
 			return nil
 		}
 
 		elapsed := active.ElapsedDuration()
-		status := "activa"
+		status := "active"
 		if active.Paused {
-			status = "pausada"
+			status = "paused"
 		}
 
-		fmt.Printf("%s %s\n", labelStyle.Render("Tarea: "), activeStyle.Render(active.Task))
-		fmt.Printf("%s %s\n", labelStyle.Render("Tiempo:"), timer.FormatDuration(elapsed))
-		fmt.Printf("%s [%s]\n", labelStyle.Render("Estado:"), status)
-		fmt.Printf("%s %s\n", labelStyle.Render("Rama:  "), active.Branch)
+		fmt.Printf("%s %s\n", labelStyle.Render("Task:  "), activeStyle.Render(active.Task))
+		fmt.Printf("%s %s\n", labelStyle.Render("Time:  "), timer.FormatDuration(elapsed))
+		fmt.Printf("%s [%s]\n", labelStyle.Render("Status:"), status)
+		fmt.Printf("%s %s\n", labelStyle.Render("Branch:"), active.Branch)
 		return nil
 	},
 }

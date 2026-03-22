@@ -13,7 +13,7 @@ import (
 
 var initRepoCmd = &cobra.Command{
 	Use:   "init",
-	Short: "Configura freelow en el repo actual",
+	Short: "Initialize freelow in the current repo",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		clientID, _ := cmd.Flags().GetString("client")
 
@@ -42,14 +42,14 @@ var initRepoCmd = &cobra.Command{
 		}
 
 		style := lipgloss.NewStyle().Foreground(lipgloss.Color("10")).Bold(true)
-		fmt.Println(style.Render("✓ freelow inicializado en este repo"))
+		fmt.Println(style.Render("✓ freelow initialized in this repo"))
 		if sessions.Client != "" {
-			fmt.Printf("  Cliente: %s\n", sessions.Client)
+			fmt.Printf("  Client: %s\n", sessions.Client)
 		}
 		return nil
 	},
 }
 
 func init() {
-	initRepoCmd.Flags().StringP("client", "c", "", "ID del cliente para este repo")
+	initRepoCmd.Flags().StringP("client", "c", "", "Client ID for this repo")
 }
